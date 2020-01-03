@@ -1,5 +1,9 @@
 <template>
     <div class="slds-card">
-        <div class="slds-card__body slds-card__body_inner slds-p-vertical_small">Hello, World.</div>
+        <div class="slds-card__body slds-card__body_inner slds-p-vertical_small">
+            Hello, {greeting}. </br>
+            <input class="slds-input" type="text" value={myInput} onchange={handleChange}/>
+            <button class="slds-button slds-button_brand slds-m-top_small" onclick={handleClick}>Update</button>
+        </div>
     </div>
 </template>

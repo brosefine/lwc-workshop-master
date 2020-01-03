@@ -8,6 +8,15 @@
             ],
             "c/helloWorld": [
                 "helloWorld/helloWorld.js"
+            ],
+            "c/pubsub": [
+                "pubsub/pubsub.js"
+            ],
+            "c/similarProperties": [
+                "similarProperties/similarProperties.js"
+            ],
+            "c/similarProperty": [
+                "similarProperty/similarProperty.js"
             ]
         }
     },
