@@ -5,4 +5,13 @@
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="searchCriteria" datasource="Price,Bedrooms" label="Search Criteria" type="String" default="Price" />
+            <property name="priceRange" type="String" label="Price Range" default="100000" />
+            <objects>
+                <object>Property__c</object>
+            </objects>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

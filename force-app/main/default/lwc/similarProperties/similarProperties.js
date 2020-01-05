@@ -3,7 +3,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
 import { CurrentPageReference } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
-import findProperties from '@salesforce/apex/SimilarPropertyController.findProperties';
+import getSimilarProperties from '@salesforce/apex/SimilarPropertyController.getSimilarProperties';
 
 const fields = ['Property__c.Name',
                 'Property__c.Price__c',
@@ -13,14 +13,23 @@ const fields = ['Property__c.Name',
 
 export default class SimilarProperties extends LightningElement {
     @api recordId;
+    @api searchCriteria = 'Price';
+    @api priceRange = '100000';
+    @track cardTitle;
     @track props;
     @track errorMsg;
     @track property;
     @track price;
     @track beds;
+    @track noData;
     @wire(CurrentPageReference) pageRef;
 
-    @wire(findProperties, {recordId: '$recordId', priceRange: '100000', price: '$price', beds: '$beds'})
+    @wire(getSimilarProperties, {   recordId: '$recordId', 
+                                    priceRange: '$priceRange', 
+                                    price: '$price', 
+                                    beds: '$beds', 
+                                    searchCriteria: '$searchCriteria',
+                                })
     wiredProps(value) {
         this.wiredRecords = value;
         if (value.error) {
@@ -28,6 +37,7 @@ export default class SimilarProperties extends LightningElement {
             console.log("ERROR: ", this.errorMsg);
         } else if (value.data) {
             this.props = value.data;
+            this.noData = this.props.length === 0;
         }
     }
 
@@ -52,5 +62,9 @@ export default class SimilarProperties extends LightningElement {
 
     refreshSelection() {
         refreshApex(this.wiredRecords);
+    }
+
+    renderedCallback() {
+        this.cardTitle = 'Similar Properties by ' + this.searchCriteria;
     }
 }
